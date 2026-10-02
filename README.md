@@ -2,7 +2,11 @@
 
 # 🚪 Walk-in Homepage
 
-## Every academic homepage is a list.<br>This one has a door.
+## I built a homepage you can walk into.
+
+### Every academic homepage is a list. This one has a door.
+
+![Walking in: the lobby, the door, the office by day and by night](docs/demo.gif)
 
 **Knock. Read the notice board. Open the door. Look around my office.**
 

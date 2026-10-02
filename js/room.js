@@ -73,7 +73,7 @@ export function buildRoom({ scene, world, register, entries }) {
         const white = std(0xffffff, { roughness: 0.35 });
         add(mug, new THREE.CylinderGeometry(0.045, 0.04, 0.1, 24), white, [0, 0.05, 0]);
         add(mug, new THREE.CylinderGeometry(0.0458, 0.0452, 0.025, 24), std(0xe2574c), [0, 0.062, 0]);
-        add(mug, new THREE.CylinderGeometry(0.04, 0.04, 0.002, 20), std(0x6b4226), [0, 0.096, 0], { cast: false });
+        add(mug, new THREE.CylinderGeometry(0.04, 0.04, 0.002, 20), std(0x6b4226), [0, 0.1005, 0], { cast: false });
         const handle = add(mug, new THREE.TorusGeometry(0.026, 0.008, 8, 16, Math.PI), white, [0.045, 0.05, 0]);
         handle.rotation.z = -Math.PI / 2;
         world.add(mug);
@@ -146,7 +146,7 @@ export function buildRoom({ scene, world, register, entries }) {
         plant.position.set(2.45, 0, -2.4);
         add(plant, new THREE.CylinderGeometry(0.2, 0.15, 0.38, 20), std(0xd67a58), [0, 0.19, 0]);
         add(plant, new THREE.CylinderGeometry(0.215, 0.215, 0.05, 20), std(0xc96d4c), [0, 0.37, 0]);
-        add(plant, new THREE.CylinderGeometry(0.19, 0.19, 0.01, 20), std(0x5b4636), [0, 0.39, 0], { cast: false });
+        add(plant, new THREE.CylinderGeometry(0.19, 0.19, 0.01, 20), std(0x5b4636), [0, 0.393, 0], { cast: false });  // just above the rim, or the two faces flicker
         const leafGeo = new THREE.IcosahedronGeometry(1, 1);
         const greens = [0x4f9a6b, 0x5fae7a, 0x3f845a];
         const pr = rng(5);
