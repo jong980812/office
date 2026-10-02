@@ -8,6 +8,8 @@
 
 ![Walking in: the lobby, the door, the office by day and by night](docs/demo.gif)
 
+[🎬 Watch it in 1080p / 60 fps](https://jong980812.github.io/walk-in-homepage/docs/demo.mp4)
+
 **Knock. Read the notice board. Open the door. Look around my office.**
 
 ### [▶ &nbsp;Open the door — live demo&nbsp; ◀](https://jong980812.github.io/walk-in-homepage/)

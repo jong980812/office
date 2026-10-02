@@ -576,13 +576,13 @@ body:not(.inside) :is(.chips, .hint, .only-inside) { display: none; }
     border: 1px solid var(--line);
     box-shadow: var(--shadow-md);
     z-index: 4;
-    max-width: calc(100vw - 32px);
     overflow-x: auto;
     scrollbar-width: none;
-    transition: transform .45s var(--ease);
+    transition: right .45s var(--ease), transform .45s var(--ease);
 }
 .chips::-webkit-scrollbar { display: none; }
-body.is-focused .chips { transform: translateX(calc(var(--panel-w) / -2)); }
+/* With a panel open the bar centres itself in the space left of it, and scrolls if that is too narrow. */
+body.is-focused .chips { right: calc(var(--panel-w) + 28px); }
 .chip-btn {
     flex: none;
     display: flex;
@@ -834,7 +834,7 @@ body.is-focused .hint { display: none; }
     .marker-desc { display: none; }
 
     .chips { bottom: calc(12px + env(safe-area-inset-bottom)); }
-    body.is-focused .chips { transform: translateY(200%); }
+    body.is-focused .chips { right: 16px; transform: translateY(200%); }
 
     .panel {
         top: auto; left: 0; right: 0; bottom: 0;
