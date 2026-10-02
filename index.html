@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Jongseo Lee — an interactive 3D tour of my research office. Trustworthy multimodal video understanding and Physical AI at Kyung Hee University. Seeking PhD positions in the U.S. (Fall 2027).">
+    <title>Jongseo Lee | Office</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231f4e8c%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EJL%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/office.css">
+</head>
+<body>
+
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div id="markers" aria-label="Objects in the office"></div>
+    <div id="tooltip" role="status" aria-live="polite"></div>
+
+    <!-- Top bar -->
+    <nav class="topbar">
+        <div class="top-left">
+            <a class="brand" href="#" data-action="home">Jongseo Lee <span>· Research Office</span></a>
+            <!-- Live Seoul time; js/clock.js fills it in and uses it to pick the day or night theme. -->
+            <button class="clock" id="clock" title="Seoul time — click to switch between day and night">
+                <span class="clock-icon" aria-hidden="true"></span>
+                <span class="clock-place">Seoul, Korea</span>
+                <span class="clock-time">--:-- KST</span>
+            </button>
+        </div>
+        <div class="top-links">
+            <button class="only-inside" data-action="exit">← Lobby</button>
+            <a class="hide-sm" href="https://jong980812.github.io/assets/Jongseo_Lee_CV.pdf" target="_blank" rel="noopener">CV</a>
+            <a class="hide-sm" href="https://jong980812.github.io/">Classic site ↗</a>
+        </div>
+    </nav>
+
+    <!-- Lobby: the wall outside the office. Everything here is plain HTML, readable without 3D. -->
+    <section class="lobby" id="lobby" aria-label="Entrance">
+        <div class="lobby-row">
+            <header class="plate">
+                <p class="eyebrow">Research Office</p>
+                <div class="plate-head">
+                    <img src="assets/img/profile.jpg" alt="Portrait of Jongseo Lee">
+                    <div>
+                        <h1>Jongseo Lee</h1>
+                        <p class="plate-role">Post-Master Researcher</p>
+                    </div>
+                </div>
+                <p class="plate-affil"><a href="https://vll.khu.ac.kr/pub.html" target="_blank" rel="noopener">Vision and Learning Lab</a>, Kyung Hee University</p>
+                <p class="plate-tagline">I work on <strong>trustworthy multimodal video understanding</strong> — and I'm now extending it toward <strong>Physical AI</strong>.</p>
+                <ul class="plate-stats">
+                    <li><b>12</b><span>Publications</span></li>
+                    <li><b>6</b><span>First-author, top-tier</span></li>
+                    <li><b>3.5%</b><span>NeurIPS ’25 Spotlight</span></li>
+                </ul>
+                <div class="plate-links">
+                    <a class="btn btn-primary" href="mailto:jong980812@khu.ac.kr">Email</a>
+                    <a class="btn btn-ghost" href="https://jong980812.github.io/assets/Jongseo_Lee_CV.pdf" target="_blank" rel="noopener">CV</a>
+                    <a class="btn btn-ghost" href="https://github.com/jong980812" target="_blank" rel="noopener">GitHub</a>
+                    <a class="btn btn-ghost" href="https://www.linkedin.com/in/jongseo-lee-a551ab244/" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+                <p class="visitors" id="visitors" hidden><span class="dot"></span>You are visitor <b></b> — thanks for stopping by.</p>
+            </header>
+
+            <div class="door">
+                <!-- The doorway is a hole in the wall: the 3D office shows through once the leaf swings open. -->
+                <div class="doorway">
+                    <button class="door-leaf" data-action="enter" aria-label="Open the door and enter the office">
+                        <span class="door-sign"><b>Jongseo Lee</b><small>Come in — it’s open</small></span>
+                        <span class="door-inset"></span>
+                        <span class="door-knob"></span>
+                    </button>
+                </div>
+                <button class="door-cta" data-action="enter" tabindex="-1" aria-hidden="true">Open the door <span>→</span></button>
+            </div>
+
+            <aside class="board" aria-label="Notice board">
+                <p class="eyebrow">Notice board</p>
+                <div class="note">
+                    <p class="phd-badge"><span class="dot"></span>Open to opportunities</p>
+                    <h2>Seeking PhD positions in the U.S. — Fall 2027</h2>
+                    <p>If you think I could be a good fit for your group, I’d love to hear from you:
+                    <a href="mailto:jong980812@khu.ac.kr">jong980812@khu.ac.kr</a></p>
+                </div>
+                <h3 class="board-sub">Latest news</h3>
+                <ul class="board-news" id="lobby-news"></ul>
+                <h3 class="board-sub board-dir">Inside the office</h3>
+                <div class="board-directory board-dir" id="lobby-directory"></div>
+            </aside>
+        </div>
+        <div class="lobby-floor"></div>
+    </section>
+
+    <!-- Section chips: keyboard/mobile-friendly way into every panel -->
+    <p class="hint">Click a numbered object to open it · drag to look around</p>
+    <nav class="chips" id="chips" aria-label="Sections">
+        <button class="chip-tour" data-action="tour">Tour →</button>
+    </nav>
+
+    <!-- Detail panel -->
+    <aside class="panel" id="panel" aria-hidden="true" aria-labelledby="panel-title">
+        <div class="panel-head">
+            <div>
+                <p class="panel-eyebrow" id="panel-eyebrow"></p>
+                <h2 class="panel-title" id="panel-title" tabindex="-1"></h2>
+            </div>
+            <button class="panel-close" data-action="close" aria-label="Close panel">×</button>
+        </div>
+        <div class="panel-body" id="panel-body"></div>
+        <div class="panel-foot">
+            <button class="foot-btn" data-action="prev" id="foot-prev"></button>
+            <span class="foot-count" id="foot-count"></span>
+            <button class="foot-btn next" data-action="next" id="foot-next"></button>
+        </div>
+    </aside>
+
+    <p class="scene-error" id="scene-error" role="alert" hidden></p>
+
+    <noscript>
+        <div class="noscript">This page needs JavaScript. Visit the <a href="https://jong980812.github.io/">classic homepage</a> instead.</div>
+    </noscript>
+
+    <!-- ================= Panel content ================= -->
+
+    <template id="tpl-about">
+        <p>I recently completed my <strong>M.S. in Computer Science</strong> at
+        <strong>Kyung Hee University</strong> and am continuing my research at the same lab as a
+        <strong>Post-Master Researcher</strong>, advised by <a href="https://sites.google.com/site/jchoivision/" target="_blank" rel="noopener"><strong>Prof. Jinwoo Choi</strong></a>.
+        I am currently <strong>seeking PhD positions in the United States (Fall 2027)</strong>.</p>
+
+        <p>My research centers on <strong>trustworthy multimodal video understanding</strong> across
+        vision, language, and audio. Rather than a single technique, I'm drawn to the whole picture —
+        how these models are <strong>trained</strong>, what they actually <strong>learn</strong>, and
+        whether their reasoning is grounded, reliable, and interpretable.</p>
+
+        <p>Before graduate school, I earned <strong>dual bachelor's degrees</strong> in
+        Biomedical Engineering and Electronics Engineering. That interdisciplinary background —
+        signal processing, embedded systems, and AI — still shapes how I approach research today.</p>
+
+        <h3 class="p-sub">Education</h3>
+        <ul class="timeline">
+            <li><b>Post-Master Researcher, Computer Science</b><span>Kyung Hee University · 2025.9 – Present</span></li>
+            <li><b>M.S. in Computer Science</b><span>Kyung Hee University · 2023.8 – 2025.8</span></li>
+            <li><b>B.S. in Electronics Engineering</b><span>Kyung Hee University · 2020 – 2023.7</span></li>
+            <li><b>B.S. in Biomedical Engineering</b><span>Kyung Hee University · 2017 – 2023.2</span></li>
+        </ul>
+    </template>
+
+    <template id="tpl-research">
+        <div class="ri">
+            <span class="ri-num">01</span>
+            <h3>Trustworthy Multimodal Video</h3>
+            <p>Video-language-audio models we can rely on — with grounded reasoning, hallucination
+            mitigation, and interpretability at the core, so an answer reflects what truly happens
+            on screen.</p>
+        </div>
+        <div class="ri">
+            <span class="ri-num">02</span>
+            <h3>How Models Learn</h3>
+            <p>A broad curiosity about the learning process itself — how these models are trained,
+            what representations they form, and why they succeed or fail — rather than any single
+            technique.</p>
+        </div>
+        <div class="ri ri-next">
+            <span class="ri-num">03</span>
+            <h3>Video for Physical AI</h3>
+            <p>Extending video understanding toward Physical AI — treating video as the modality
+            through which machines perceive, reason about, and eventually act in the physical
+            world.</p>
+        </div>
+        <p class="p-note">This thread runs across my work: diagnosing failure modes of Video-LLMs in
+        <a href="https://hyuntak03.github.io/DeltaDirect/" target="_blank" rel="noopener">DeltaDirect</a>
+        (NeurIPS 2026), concept-level explanation in
+        <a href="https://jong980812.github.io/DANCE/" target="_blank" rel="noopener">DANCE</a>
+        (NeurIPS 2025 Spotlight), audio–visual reasoning in
+        <a href="https://arxiv.org/abs/2503.23447" target="_blank" rel="noopener">CA²ST</a>
+        (IEEE TPAMI 2026), and continual learning in
+        <a href="https://arxiv.org/abs/2508.10896" target="_blank" rel="noopener">ESSENTIAL</a>
+        (ICCV 2025 Highlight).</p>
+    </template>
+
+    <template id="tpl-publications">
+        <p class="p-note">* equally contributed first authors &nbsp;·&nbsp; &dagger; corresponding author</p>
+
+        <article class="pub pub-featured">
+            <video src="assets/video/modirect_teaser.mp4" poster="assets/img/modirect_teaser_poster.jpg"
+                   autoplay muted loop playsinline preload="metadata"
+                   aria-label="Which Way Did It Move? — teaser video"></video>
+            <h3>Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs</h3>
+            <p class="pub-authors"><b>Jongseo Lee*</b>, Hyuntak Lee*, Sunghun Kim, Sooa Kim, Jihoon Chung, Jinwoo Choi&dagger;</p>
+            <p class="pub-venue"><span class="chip chip-venue">NeurIPS 2026</span></p>
+            <p class="pub-links">
+                <a href="https://arxiv.org/abs/2605.22823" target="_blank" rel="noopener">Paper</a>
+                <a href="https://hyuntak03.github.io/DeltaDirect/" target="_blank" rel="noopener">Project Page</a>
+                <a href="https://github.com/KHU-VLL/DeltaDirect" target="_blank" rel="noopener">Code</a>
+            </p>
+        </article>
+
+        <article class="pub">
+            <img class="pub-thumb" src="assets/img/thumbs/TRACE.jpg" alt="TRACE overview" loading="lazy">
+            <div>
+                <h3>TRACE: Trajectory-Aware Concepts for Explainable Video Understanding</h3>
+                <p class="pub-authors">Wooil Lee, Junpyo Hong, <b>Jongseo Lee</b>, Tuomas Oikarinen, Tsui-Wei Weng, Jinwoo Choi&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-venue">NeurIPS 2026</span></p>
+                <p class="pub-links"><span class="chip chip-preprint">Paper coming soon</span></p>
+            </div>
+        </article>
+
+        <article class="pub">
+            <img class="pub-thumb" src="assets/img/thumbs/dance.jpg" alt="DANCE overview" loading="lazy">
+            <div>
+                <h3>Disentangled Concepts Speak Louder Than Words: Explainable Video Action Recognition</h3>
+                <p class="pub-authors"><b>Jongseo Lee</b>, Wooil Lee, Gyeong-Moon Park&dagger;, Seong Tae Kim&dagger;, Jinwoo Choi&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-venue">NeurIPS 2025</span><span class="chip chip-spotlight">Spotlight · top 3.5%</span></p>
+                <p class="pub-links">
+                    <a href="https://arxiv.org/abs/2511.03725" target="_blank" rel="noopener">Paper</a>
+                    <a href="https://github.com/KHU-VLL/DANCE" target="_blank" rel="noopener">Code</a>
+                </p>
+            </div>
+        </article>
+
+        <article class="pub">
+            <img class="pub-thumb" src="assets/img/thumbs/essential.jpg" alt="ESSENTIAL overview" loading="lazy">
+            <div>
+                <h3>ESSENTIAL: Episodic and Semantic Memory Integration for Video Class-Incremental Learning</h3>
+                <p class="pub-authors"><b>Jongseo Lee*</b>, Kyungho Bae*, Kyle Min, Gyeong-Moon Park&dagger;, Jinwoo Choi&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-venue">ICCV 2025</span><span class="chip chip-highlight">Highlight · top 2.9%</span></p>
+                <p class="pub-links">
+                    <a href="https://arxiv.org/abs/2508.10896" target="_blank" rel="noopener">Paper</a>
+                    <a href="https://github.com/KHU-VLL/ESSENTIAL" target="_blank" rel="noopener">Code</a>
+                </p>
+            </div>
+        </article>
+
+        <article class="pub">
+            <img class="pub-thumb" src="assets/img/thumbs/pcbear_overview.jpg" alt="PCBEAR overview" loading="lazy">
+            <div>
+                <h3>PCBEAR: Pose Concept Bottleneck for Explainable Action Recognition</h3>
+                <p class="pub-authors"><b>Jongseo Lee</b>, Wooil Lee, Gyeong-Moon Park&dagger;, Seong Tae Kim&dagger;, Jinwoo Choi&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-venue">CVPR 2025 · XAI4CV Workshop</span><span class="chip chip-spotlight">Spotlight · top 16.7%</span></p>
+                <p class="pub-links"><a href="https://arxiv.org/abs/2504.13140" target="_blank" rel="noopener">Paper</a></p>
+            </div>
+        </article>
+
+        <article class="pub">
+            <img class="pub-thumb" src="assets/img/thumbs/ca2st_motivation.jpg" alt="CA2ST motivation" loading="lazy">
+            <div>
+                <h3>CA²ST: Cross-Attention in Audio, Space, and Time for Holistic Video Recognition</h3>
+                <p class="pub-authors"><b>Jongseo Lee*</b>, Joohyun Chang*, Dongho Lee, Jinwoo Choi&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-venue">IEEE TPAMI 2025</span></p>
+                <p class="pub-links"><a href="https://arxiv.org/abs/2503.23447" target="_blank" rel="noopener">Paper</a></p>
+            </div>
+        </article>
+
+        <article class="pub">
+            <div class="pub-thumb pub-thumb-empty" aria-hidden="true">PCEvE</div>
+            <div>
+                <h3>PCEvE: Part Contribution Evaluation Based Model Explanation for Human Figure Drawing Assessment and Beyond</h3>
+                <p class="pub-authors"><b>Jongseo Lee*</b>, Geo Ahn*, Seong Tae Kim&dagger;, Jinwoo Choi&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-preprint">arXiv 2024</span> Preprint, under review</p>
+                <p class="pub-links"><a href="https://arxiv.org/abs/2409.18260" target="_blank" rel="noopener">Paper</a></p>
+            </div>
+        </article>
+
+        <article class="pub">
+            <img class="pub-thumb" src="assets/img/thumbs/CAST_overview.jpg" alt="CAST overview" loading="lazy">
+            <div>
+                <h3>CAST: Cross-Attention in Space and Time for Video Action Recognition</h3>
+                <p class="pub-authors">Dongho Lee*, <b>Jongseo Lee*</b>, Jinwoo Choi&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-venue">NeurIPS 2023</span></p>
+                <p class="pub-links">
+                    <a href="https://neurips.cc/virtual/2023/poster/70748" target="_blank" rel="noopener">Paper</a>
+                    <a href="https://github.com/KHU-VLL/CAST" target="_blank" rel="noopener">Code</a>
+                </p>
+            </div>
+        </article>
+
+        <article class="pub">
+            <div class="pub-thumb pub-thumb-empty" aria-hidden="true">JAT</div>
+            <div>
+                <h3>Metaverse Interface with Haptic and Rigid Sense Feedback at a Low Cost</h3>
+                <p class="pub-authors"><b>Jongseo Lee</b>, Su Hyeon Kim, Sun Woong Jang, Jun Yeong Moon, Doug Young Suh&dagger;</p>
+                <p class="pub-venue"><span class="chip chip-venue">Journal of Appropriate Technology 8(2), 2022</span></p>
+                <p class="pub-links"><a href="https://www.e-jat.org/journal/view.php?doi=10.37675/jat.2022.00171" target="_blank" rel="noopener">DOI</a></p>
+            </div>
+        </article>
+
+        <h3 class="p-sub">Domestic Conferences</h3>
+        <ul class="plain-list">
+            <li><b>Video Concept Bottleneck Model</b><span><b>Jongseo Lee</b>, Soohyun Park, Jinwoo Choi&dagger; · KIISE 2024 · <a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11862420" target="_blank" rel="noopener">Paper</a></span></li>
+            <li><b>Efficient Video Class Incremental Learning via Class Token Re-Learning</b><span><b>Jongseo Lee</b>, Soohyun Park, Jinwoo Choi&dagger; · KIISE 2024 · <a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11862420" target="_blank" rel="noopener">Paper</a></span></li>
+            <li><b>Audio-Video Cross Attention for Effective Video Action Recognition</b><span><b>Jongseo Lee</b>, Joohyun Chang, Jinwoo Choi&dagger; · KIISE 2024 · <a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11862452" target="_blank" rel="noopener">Paper</a></span></li>
+        </ul>
+    </template>
+
+    <template id="tpl-recognition">
+        <div class="stats">
+            <div><b>12</b><span>Publications</span></div>
+            <div><b>6</b><span>First-author, top-tier venues</span></div>
+            <div><b>3.5%</b><span>NeurIPS 2025 Spotlight</span></div>
+        </div>
+        <h3 class="p-sub">Selected Recognition</h3>
+        <ul class="recog">
+            <li><span class="chip chip-spotlight">Spotlight</span><b>NeurIPS 2025 · DANCE</b><span class="recog-sub">top 3.5%</span></li>
+            <li><span class="chip chip-highlight">Highlight</span><b>ICCV 2025 · ESSENTIAL</b><span class="recog-sub">top 2.9%</span></li>
+            <li><span class="chip chip-spotlight">Spotlight</span><b>CVPR 2025 XAI4CV · PCBEAR</b><span class="recog-sub">top 16.7%</span></li>
+            <li><span class="chip chip-venue">Journal</span><b>IEEE TPAMI 2026 · CA²ST</b></li>
+        </ul>
+    </template>
+
+    <template id="tpl-news">
+        <div class="news pinned">
+            <span class="news-date">2026.07</span>
+            <h3>Seeking PhD Positions in the U.S. (Fall 2027) <span class="chip chip-spotlight">Open to Opportunities</span></h3>
+            <p>I completed my M.S. and am now a Post-Master Researcher at the Vision and Learning Lab.
+            I am <strong>actively looking for PhD positions in the United States for Fall 2027</strong>,
+            focusing on trustworthy multimodal video understanding, Physical AI, and reliable video-language models.
+            If you think I could be a good fit for your group, I would love to hear from you —
+            <a href="mailto:jong980812@khu.ac.kr">jong980812@khu.ac.kr</a>.</p>
+        </div>
+        <div class="news">
+            <span class="news-date">2026.09</span>
+            <h3>Two Papers Accepted to NeurIPS 2026 <span class="chip chip-venue">NeurIPS 2026</span><span class="chip chip-spotlight">2 papers</span></h3>
+            <p>Two of our papers have been accepted to <strong>NeurIPS 2026</strong>!
+            “<em>Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in
+            Video-LLMs</em>” (<a href="https://hyuntak03.github.io/DeltaDirect/" target="_blank" rel="noopener">DeltaDirect</a>),
+            which diagnoses and fixes directional motion blindness in Video-LLMs, and
+            “<em>TRACE: Trajectory-Aware Concepts for Explainable Video Understanding</em>”,
+            which extends concept-based explanation to object trajectories over time.
+            Grateful to all my collaborators, including Wooil Lee, Junpyo Hong, Hyuntak Lee,
+            Tuomas Oikarinen, Tsui-Wei Weng, and Jinwoo Choi.</p>
+        </div>
+        <div class="news">
+            <span class="news-date">2026.05</span>
+            <h3>New Preprint on arXiv <span class="chip chip-preprint">arXiv 2026</span></h3>
+            <p>We released “<em>Which Way Did It Move? Diagnosing and Overcoming Directional Motion
+            Blindness in Video-LLMs</em>”. We identify a fundamental failure mode of Video-LLMs —
+            <strong>directional motion blindness</strong> — and introduce <strong>DeltaDirect</strong>,
+            a parameter-efficient motion-change head that raises LLaVA-Video-7B from 27.6% to
+            <strong>85.4%</strong> on real-world direction QA.
+            See <a href="https://arxiv.org/abs/2605.22823" target="_blank" rel="noopener">arXiv (2605.22823)</a>
+            and the <a href="https://hyuntak03.github.io/DeltaDirect/" target="_blank" rel="noopener">project page</a>.</p>
+        </div>
+        <div class="news">
+            <span class="news-date">2025.11</span>
+            <h3>TPAMI Paper Accepted <span class="chip chip-venue">IEEE TPAMI</span></h3>
+            <p>Our paper “<em>CA<sup>2</sup>ST: Cross-Attention in Audio, Space, and Time for Holistic
+            Video Recognition</em>” has been accepted to <strong>IEEE TPAMI</strong>, one of the most
+            prestigious journals in computer vision and AI. This work extends our NeurIPS 2023 paper
+            <em>CAST</em> with <strong>audio-visual reasoning</strong> in a unified cross-attention framework.
+            Huge thanks to my collaborators Joohyun Chang and Jinwoo Choi.
+            <a href="https://arxiv.org/abs/2503.23447" target="_blank" rel="noopener">arXiv (2503.23447)</a></p>
+        </div>
+        <div class="news">
+            <span class="news-date">2025.09</span>
+            <h3>NeurIPS 2025 Spotlight Paper Accepted <span class="chip chip-venue">NeurIPS 2025</span><span class="chip chip-spotlight">Spotlight · top 3.5%</span></h3>
+            <p>Our paper “<em>Disentangled Concepts Speak Louder Than Words: Explainable Video Action
+            Recognition</em>” has been accepted to <strong>NeurIPS 2025</strong> as a
+            <strong>Spotlight (3.5% acceptance rate)</strong>. The work disentangles motion dynamics,
+            objects, and scenes into human-understandable concepts — strong performance with clear
+            explanations of model decisions. Grateful to my collaborators Wooil Lee, Gyeong-Moon Park,
+            Seong Tae Kim, and Jinwoo Choi.</p>
+        </div>
+        <div class="news">
+            <span class="news-date">2025.07</span>
+            <h3>ICCV 2025 Highlight Paper Accepted <span class="chip chip-venue">ICCV 2025</span><span class="chip chip-highlight">Highlight · top 2.9%</span></h3>
+            <p>My paper “<em>ESSENTIAL: Episodic and Semantic Memory Integration for Video
+            Class-Incremental Learning</em>” has been accepted to <strong>ICCV 2025</strong> as a
+            <strong>Highlight (top 2.9%)</strong> — after three submission attempts. The journey was filled with
+            revisions and rejections, but it proved to be an incredible learning experience.
+            Thank you to everyone who supported me along the way.</p>
+        </div>
+    </template>
+
+    <template id="tpl-physical-ai">
+        <p class="p-lead">I am now moving toward <strong>Physical AI</strong>, studying video as the primary modality
+        through which machines perceive, reason about, and eventually act in the physical world.</p>
+        <div class="ri ri-next">
+            <span class="ri-num">03</span>
+            <h3>Video for Physical AI</h3>
+            <p>Extending video understanding toward Physical AI — treating video as the modality
+            through which machines perceive, reason about, and eventually act in the physical
+            world.</p>
+        </div>
+        <div class="callout">
+            <p class="phd-badge"><span class="dot"></span>Seeking PhD positions in the U.S. — Fall 2027</p>
+            <p>If you think I could be a good fit for your group, I would love to hear from you.</p>
+            <a class="btn btn-primary" href="mailto:jong980812@khu.ac.kr">jong980812@khu.ac.kr</a>
+        </div>
+    </template>
+
+    <template id="tpl-contact">
+        <p class="p-lead">Whether it's about PhD opportunities, research collaboration, or just to say hi —
+        my inbox is always open.</p>
+        <ul class="contact-list">
+            <li><span>Email</span><a href="mailto:jong980812@khu.ac.kr">jong980812@khu.ac.kr</a></li>
+            <li><span>GitHub</span><a href="https://github.com/jong980812" target="_blank" rel="noopener">github.com/jong980812</a></li>
+            <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/jongseo-lee-a551ab244/" target="_blank" rel="noopener">Jongseo Lee</a></li>
+            <li><span>Lab</span><a href="https://vll.khu.ac.kr/pub.html" target="_blank" rel="noopener">Vision and Learning Lab</a></li>
+        </ul>
+        <div class="contact-actions">
+            <a class="btn btn-primary" href="mailto:jong980812@khu.ac.kr">Email Me</a>
+            <a class="btn btn-ghost" href="https://jong980812.github.io/assets/Jongseo_Lee_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+        </div>
+        <p class="p-note">I am always open to collaboration and discussion on computer vision, multimodal AI, and
+        reliable video understanding. Feel free to reach out!</p>
+    </template>
+
+    <script>
+        // If the 3D module never starts (very old browser, blocked CDN), say so instead of showing an empty page.
+        window.addEventListener('error', function (e) { window.__officeError = window.__officeError || e.message; });
+        setTimeout(function () {
+            if (document.querySelector('#scene.ready') || document.body.classList.contains('no-webgl')) return;
+            var el = document.getElementById('scene-error');
+            el.innerHTML = 'The 3D office couldn\u2019t load in this browser. Please visit the <a href="https://jong980812.github.io/">classic homepage</a>.' +
+                (window.__officeError ? '<small>' + String(window.__officeError).replace(/</g, '&lt;') + '</small>' : '');
+            el.hidden = false;
+        }, 10000);
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
