@@ -6,9 +6,9 @@
 
 **Knock. Read the notice board. Open the door. Look around my office.**
 
-### [▶ &nbsp;Open the door — live demo&nbsp; ◀](https://jong980812.github.io/office/)
+### [▶ &nbsp;Open the door — live demo&nbsp; ◀](https://jong980812.github.io/walk-in-homepage/)
 
-[![Live demo](https://img.shields.io/badge/live-demo-1f4e8c?style=for-the-badge)](https://jong980812.github.io/office/)
+[![Live demo](https://img.shields.io/badge/live-demo-1f4e8c?style=for-the-badge)](https://jong980812.github.io/walk-in-homepage/)
 [![Built with Claude Code](https://img.shields.io/badge/built%20with-Claude%20Code%20%C2%B7%20Fable%205.1-d97757?style=for-the-badge)](https://claude.com/claude-code)
 [![No build step](https://img.shields.io/badge/build%20step-none-3fb56b?style=for-the-badge)](#run-it-locally)
 [![License: MIT](https://img.shields.io/badge/code-MIT-e8b931?style=for-the-badge)](LICENSE)
@@ -78,7 +78,7 @@ You need [Claude Code](https://claude.com/claude-code) (I used it with **Claude 
 whatever you'd put on a homepage: your CV, a photo, links to your papers.
 
 ```bash
-git clone https://github.com/jong980812/office.git my-office
+git clone https://github.com/jong980812/walk-in-homepage.git my-office
 cd my-office
 claude
 ```
@@ -136,7 +136,7 @@ I've agreed.
 
 You don't have to throw your current site away. I didn't: my
 [classic homepage](https://jong980812.github.io/) still lives at `jong980812.github.io`, and the
-office is an extension built onto it at [`/office`](https://jong980812.github.io/office/). The
+office is an extension built onto it at [`/walk-in-homepage`](https://jong980812.github.io/walk-in-homepage/). The
 office took its content from the classic site, and each links to the other, so visitors can choose
 the plain page or the door.
 
@@ -224,19 +224,19 @@ Where to change things by hand:
 **Built one? Come brag about it.** With this code or from scratch, finished or half-furnished —
 I want to see it.
 
-### [🏠 &nbsp;Show off your homepage →](https://github.com/jong980812/office/issues/new?template=showcase.yml)
+### [🏠 &nbsp;Show off your homepage →](https://github.com/jong980812/walk-in-homepage/issues/new?template=showcase.yml)
 
 It takes a link and a screenshot. I'll add every one to the gallery below, so the next person
 has more than one room to steal ideas from.
 
 **Gallery**
 
-- [Jongseo Lee — Research Office](https://jong980812.github.io/office/) · an office in Seoul that keeps its owner's hours
+- [Jongseo Lee — Research Office](https://jong980812.github.io/walk-in-homepage/) · an office in Seoul that keeps its owner's hours
 - *your room here*
 
 **Backseat driving is welcome, too.** Think the lighting is off, the room needs a couch, or the
 camera should do something smarter?
-[Tell me how you'd do it](https://github.com/jong980812/office/issues/new?template=backseat.yml). I mean it.
+[Tell me how you'd do it](https://github.com/jong980812/walk-in-homepage/issues/new?template=backseat.yml). I mean it.
 
 ## Credits and license
 
