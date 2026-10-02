@@ -140,8 +140,8 @@ Handy URLs while editing: `?hour=22` previews night, `#office` skips the lobby,
 
 ## Browser support
 
-Tested in Chrome, Safari, Edge and Firefox on desktop, and in Safari and Chrome on phones (portrait and
-landscape). It needs WebGL; without it the lobby and every section still work, just without the room.
+Checked in Chrome at desktop and phone sizes (portrait and landscape) and in Safari; other modern
+browsers should work too — tell me if yours doesn't. It needs WebGL; without it the lobby and every section still work, just without the room.
 
 If the page looks broken right after an update, your browser is mixing old cached files with new
 ones — a hard refresh (Ctrl+Shift+R, or Cmd+Shift+R on a Mac) fixes it. When you deploy your own
