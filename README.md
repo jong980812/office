@@ -2,34 +2,45 @@
 
 # 🚪 Walk-in Homepage
 
-### A researcher homepage you walk into, not scroll through.
+## Every academic homepage is a list.<br>This one has a door.
 
-Don't scroll my CV. Open the door and look around.
+**Knock. Read the notice board. Open the door. Look around my office.**
 
-**[▶ Open the door — live demo](https://jong980812.github.io/office/)**
+### [▶ &nbsp;Open the door — live demo&nbsp; ◀](https://jong980812.github.io/office/)
 
 [![Live demo](https://img.shields.io/badge/live-demo-1f4e8c?style=for-the-badge)](https://jong980812.github.io/office/)
 [![Built with Claude Code](https://img.shields.io/badge/built%20with-Claude%20Code%20%C2%B7%20Fable%205.1-d97757?style=for-the-badge)](https://claude.com/claude-code)
 [![No build step](https://img.shields.io/badge/build%20step-none-3fb56b?style=for-the-badge)](#run-it-locally)
 [![License: MIT](https://img.shields.io/badge/code-MIT-e8b931?style=for-the-badge)](LICENSE)
 
-| Knock, knock | Come in | Stay late |
+| 🚪 Knock, knock | 💡 Come in | 🌙 Stay late |
 | :---: | :---: | :---: |
 | ![Lobby](docs/lobby.png) | ![Office by day](docs/office-day.png) | ![Office at night](docs/office-night.png) |
 | A lobby with who I am and what's new | Every object opens a section | After sunset in Seoul, the lamps come on |
+
+### Want one? &nbsp;Clone it → tell Claude who you are → move in.
+
+[**Keep my style**](#route-1--keep-this-style-make-it-yours) &nbsp;·&nbsp;
+[**Build your own room**](#route-2--start-from-scratch-with-this-as-the-reference) &nbsp;·&nbsp;
+[**Add a room to the site you already have**](#route-3--add-a-room-to-the-homepage-you-already-have)
 
 </div>
 
 ---
 
-Academic homepages all look the same: a photo, a bio, a list of papers. I wanted mine to feel like
-visiting someone, so I built a **walk-in homepage**. You arrive at my door, read the notice board,
-open the door, and look around my office. The monitor shows my papers, the whiteboard my research
-roadmap, the wall of frames my awards, the robot arm what I'm working on next.
+A photo, a bio, a list of papers — you have seen that homepage a thousand times, and so has every
+professor reading applications this year. I wanted mine to feel like **visiting someone**. So you
+arrive at my door, read the notice board, open the door, and look around: the monitor plays my
+latest paper, the whiteboard holds my research roadmap, the frames on the wall are my awards, and
+the robot arm on the desk is what I'm working on next.
 
-I'm sharing the whole thing so that **other researchers can build their own.** Take mine and
-swap in your content, or use it as a reference and build something completely different.
-Both routes are below, each with a prompt you can paste straight into Claude Code.
+No designer, no 3D artist, no build pipeline. I described what I wanted to Claude Code, sentence by
+sentence, and this is what came out.
+
+I'm sharing all of it so that **other researchers can make their own.** Take mine and swap in your
+content, build a completely different room with this as the reference, or add a room onto the
+homepage you already have. Each route below comes with a prompt you can paste straight into
+Claude Code.
 
 > I'm [Jongseo Lee](https://jong980812.github.io/), a researcher working on trustworthy multimodal
 > video understanding and Physical AI — and looking for PhD positions in the U.S. for Fall 2027.
@@ -70,7 +81,7 @@ cd my-office
 claude
 ```
 
-Then pick a route.
+Then pick a route. (For Route 3, clone it next to your existing site's folder.)
 
 ### Route 1 — Keep this style, make it yours
 
@@ -119,7 +130,36 @@ without WebGL, usable on a phone. Start by proposing the room and the objects, a
 I've agreed.
 ```
 
-Either way, keep talking to it. Most of this site came from messages like *"the monitor is too
+### Route 3 — Add a room to the homepage you already have
+
+You don't have to throw your current site away. I didn't: my
+[classic homepage](https://jong980812.github.io/) still lives at `jong980812.github.io`, and the
+office is an extension built onto it at [`/office`](https://jong980812.github.io/office/). The
+office took its content from the classic site, and each links to the other, so visitors can choose
+the plain page or the door.
+
+On GitHub Pages this is just a second repository: a repo named `office` under your account is
+served at `https://<you>.github.io/office/`, next to your main site.
+
+```text
+I already have a homepage at [URL] (its source is in [../my-homepage], if you can read it).
+I want to keep it exactly as it is and add a walk-in 3D office as an extension, the way this
+repo extends jong980812.github.io.
+
+1. Read my existing homepage and take all the content from there: bio, research, publications,
+   awards, news, contact, photo and paper figures. Don't make me retype anything, and ask me
+   only about what's missing.
+2. Turn this repo into my office with that content [keeping this room / with this concept: …].
+3. Point every "Classic site" link here at my existing homepage, and match its colours and
+   fonts so the two feel like one site.
+4. Tell me the one link or button to add on my existing homepage that leads to the office,
+   and where you'd put it.
+5. I'll publish this as a separate repo named [office], served at [<me>.github.io/office/].
+   Check that every path works from that sub-folder.
+Then run it locally and show me screenshots.
+```
+
+Whichever route you take, keep talking to it. Most of this site came from messages like *"the monitor is too
 small"*, *"can I walk in through a door?"* and *"make it feel like studying at night"*.
 
 ### Put it online
