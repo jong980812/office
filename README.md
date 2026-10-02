@@ -138,6 +138,15 @@ python3 -m http.server 8765      # then open http://127.0.0.1:8765
 Handy URLs while editing: `?hour=22` previews night, `#office` skips the lobby,
 `#publications` opens a section directly.
 
+## Browser support
+
+Tested in Chrome, Safari, Edge and Firefox on desktop, and in Safari and Chrome on phones (portrait and
+landscape). It needs WebGL; without it the lobby and every section still work, just without the room.
+
+If the page looks broken right after an update, your browser is mixing old cached files with new
+ones — a hard refresh (Ctrl+Shift+R, or Cmd+Shift+R on a Mac) fixes it. When you deploy your own
+changes, bump the `?v=` number on the stylesheet and script tags in `index.html` so visitors never hit this.
+
 ## How it's put together
 
 ```

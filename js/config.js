@@ -44,7 +44,8 @@ export const OVERVIEW = {
     fov: 46,
     wide:   { target: new THREE.Vector3(-0.35, 1.3, -1.9), theta: 0.6, phi: 1.44 },
     // Portrait screens can't hold both walls, so they face the desk; the rest is a drag away.
-    narrow: { target: new THREE.Vector3(0.45, 1.3, -2.6), theta: 0.22, phi: 1.44 },
+    // `look` makes a drag turn the camera on the spot instead of orbiting the target.
+    narrow: { target: new THREE.Vector3(0.45, 1.3, -2.6), theta: 0.22, phi: 1.44, look: true },
 };
 // How far the camera may wander; keeps it inside the walls when dragging or on narrow screens.
 export const CAMERA_BOUNDS = { min: new THREE.Vector3(-2.7, 0.5, -2.2), max: new THREE.Vector3(2.75, 2.6, 6.5) };

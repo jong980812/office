@@ -1,7 +1,7 @@
 // Renderer, lights, pointer interaction, camera and the frame loop.
 import { THREE } from './three.js';
 import { OVERVIEW, KEEP_IN_VIEW, CAMERA_BOUNDS, reduceMotion, canHover } from './config.js';
-import { setMaxAnisotropy } from './util.js';
+import { UP, setMaxAnisotropy } from './util.js';
 import { seoulNow, onDaylight } from './clock.js';
 import { skyTexture, calendarTexture } from './textures.js';
 import { buildRoom } from './room.js';
@@ -160,22 +160,28 @@ export async function initScene() {
             const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
             if (Math.hypot(dx, dy) > 5) drag.moved = true;
             if (drag.moved && !state.current) {
-                cam.yawGoal = THREE.MathUtils.clamp(drag.yaw - dx * 0.004, -0.6, 0.6);
+                // Looking around on the spot (portrait) may turn much further than orbiting does.
+                const [lo, hi] = cam.fit.look ? [-1.3, 0.6] : [-0.6, 0.6];
+                cam.yawGoal = THREE.MathUtils.clamp(drag.yaw - dx * 0.004, lo, hi);
                 cam.pitchGoal = THREE.MathUtils.clamp(drag.pitch - dy * 0.003, -0.2, 0.14);
                 canvas.classList.add('dragging');
             }
         }
     });
     canvas.addEventListener('pointerdown', (e) => {
+        dragged = false;  // a touch drag ends without a click, so clear the flag here too
         drag = { x: e.clientX, y: e.clientY, yaw: cam.yawGoal, pitch: cam.pitchGoal, moved: false };
     });
     let dragged = false;
-    addEventListener('pointerup', () => {
+    const endDrag = () => {
         if (!drag) return;
         dragged = drag.moved;
         drag = null;
         canvas.classList.remove('dragging');
-    });
+    };
+    addEventListener('pointerup', endDrag);
+    // Touch browsers cancel the pointer when a system gesture takes over; without this the drag sticks.
+    addEventListener('pointercancel', endDrag);
     // Taps are handled on `click`, not `pointerup`: on touch screens the browser fires a follow-up
     // click after pointerup, and if the UI changed in between (panel closed, intro card back) that
     // click would land on whatever just appeared under the finger.
@@ -272,9 +278,19 @@ export async function initScene() {
             cam.goalOx = cam.fit.ox;
             cam.goalOy = cam.fit.oy;
             // Out in the lobby the camera waits a few steps back, so entering reads as walking in.
-            const s = new THREE.Spherical(cam.fit.dist + (state.inside ? 0 : 2.4), cam.fit.phi + cam.pitch, cam.fit.theta + cam.yaw);
+            const look = cam.fit.look;
+            const s = new THREE.Spherical(cam.fit.dist + (state.inside ? 0 : 2.4),
+                cam.fit.phi + (look ? 0 : cam.pitch), cam.fit.theta + (look ? 0 : cam.yaw));
             cam.goalTarget.copy(cam.fit.target);
             cam.goalPos.copy(cam.fit.target).add(tmpV.setFromSpherical(s));
+            if (look) {
+                // Stand still and turn the head: dragging right swings the view to the left wall.
+                tmpV.subVectors(cam.goalTarget, cam.goalPos);
+                const reach = tmpV.length();
+                tmpV.applyAxisAngle(UP, -cam.yaw);
+                tmpV.y -= cam.pitch * reach;
+                cam.goalTarget.copy(cam.goalPos).add(tmpV);
+            }
         }
         // gentle parallax
         const amp = cam.goalPos.distanceTo(cam.goalTarget) * (state.current ? 0.006 : 0.014);

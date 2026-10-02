@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231f4e8c%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EJL%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="css/office.css">
+    <link rel="stylesheet" href="css/office.css?v=3">
 </head>
 <body>
 
@@ -60,6 +60,7 @@
                     <a class="btn btn-ghost" href="https://github.com/jong980812" target="_blank" rel="noopener">GitHub</a>
                     <a class="btn btn-ghost" href="https://www.linkedin.com/in/jongseo-lee-a551ab244/" target="_blank" rel="noopener">LinkedIn</a>
                 </div>
+                <p class="only-sm">Prefer a plain page? <a href="https://jong980812.github.io/">Classic site ↗</a></p>
                 <p class="visitors" id="visitors" hidden><span class="dot"></span>You are visitor <b></b> — thanks for stopping by.</p>
             </header>
 
@@ -93,7 +94,7 @@
     </section>
 
     <!-- Section chips: keyboard/mobile-friendly way into every panel -->
-    <p class="hint">Click a numbered object to open it · drag to look around</p>
+    <p class="hint" id="hint">Click a numbered object to open it · drag to look around</p>
     <nav class="chips" id="chips" aria-label="Sections">
         <button class="chip-tour" data-action="tour">Tour →</button>
     </nav>
@@ -418,6 +419,6 @@
             el.hidden = false;
         }, 10000);
     </script>
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/main.js?v=3"></script>
 </body>
 </html>

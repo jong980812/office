@@ -1,6 +1,6 @@
 // The entrance: a hallway wall with the office door, a profile plate and a notice board.
 // Opening the door zooms through the doorway into the 3D room that is already running behind it.
-import { HOTSPOTS, reduceMotion } from './config.js';
+import { HOTSPOTS, reduceMotion, canHover } from './config.js';
 import { state, body, openPanel, closePanel } from './ui.js';
 
 const lobby = document.getElementById('lobby');
@@ -28,6 +28,8 @@ for (const h of HOTSPOTS) {
     b.innerHTML = `<span class="num">${h.index + 1}</span>${h.label}`;
     directory.append(b);
 }
+
+if (!canHover) document.getElementById('hint').textContent = 'Tap a numbered object · drag to look around';
 
 let timer;
 
