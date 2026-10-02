@@ -221,15 +221,22 @@ Where to change things by hand:
 
 ## Show me yours
 
-**I'd love to see what you build.** If you make a walk-in homepage — with this code or without
-it — open a pull request adding it to the list below, or just tag me.
+**Built one? Come brag about it.** With this code or from scratch, finished or half-furnished —
+I want to see it.
 
-- [Jongseo Lee — Research Office](https://jong980812.github.io/office/)
-- *yours?*
+### [🏠 &nbsp;Show off your homepage →](https://github.com/jong980812/office/issues/new?template=showcase.yml)
+
+It takes a link and a screenshot. I'll add every one to the gallery below, so the next person
+has more than one room to steal ideas from.
+
+**Gallery**
+
+- [Jongseo Lee — Research Office](https://jong980812.github.io/office/) · an office in Seoul that keeps its owner's hours
+- *your room here*
 
 **Backseat driving is welcome, too.** Think the lighting is off, the room needs a couch, or the
-camera should do something smarter? [Open an issue](https://github.com/jong980812/office/issues)
-and tell me how you'd do it. I mean it.
+camera should do something smarter?
+[Tell me how you'd do it](https://github.com/jong980812/office/issues/new?template=backseat.yml). I mean it.
 
 ## Credits and license
 

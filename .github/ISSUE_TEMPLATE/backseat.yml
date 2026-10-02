@@ -1,0 +1,17 @@
+name: "🪑 Backseat driving"
+description: Tell me what you'd change about my homepage. Unsolicited advice is solicited.
+title: "[Advice] "
+labels: ["advice"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you do differently?
+      description: Lighting, layout, camera, wording, a missing couch — anything.
+    validations:
+      required: true
+  - type: textarea
+    id: how
+    attributes:
+      label: How would you do it? (optional)
+      description: A sketch, a reference, a link to something that does it well.

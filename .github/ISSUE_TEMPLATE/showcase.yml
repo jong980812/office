@@ -1,0 +1,39 @@
+name: "🏠 Show off your homepage"
+description: Built a walk-in homepage? Brag about it here — I'll add it to the gallery in the README.
+title: "[Showcase] "
+labels: ["showcase"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bragging is the whole point of this form. Built with this code, or from scratch with it as a reference — both count.
+  - type: input
+    id: url
+    attributes:
+      label: Link to your homepage
+      placeholder: https://you.github.io/office/
+    validations:
+      required: true
+  - type: input
+    id: who
+    attributes:
+      label: Who are you?
+      description: Name and what you work on, as you'd like it shown in the gallery.
+      placeholder: "Jane Doe — protein folding, University of Somewhere"
+    validations:
+      required: true
+  - type: input
+    id: concept
+    attributes:
+      label: What's your room?
+      placeholder: A wet lab at night / a library carrel / same office, my stuff
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot or GIF
+      description: Drag an image here. The more it shows off, the better.
+  - type: textarea
+    id: story
+    attributes:
+      label: Anything you're proud of?
+      description: A detail, a trick, the prompt that made it click, or what you'd tell the next person.
