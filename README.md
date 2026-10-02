@@ -1,49 +1,146 @@
-# Jongseo Lee — Research Office
+<div align="center">
 
-An interactive 3D version of my research homepage. You arrive in a lobby, open the door, and walk
-into a small office where every object opens a section of the site.
+# 🚪 Research Office — a walk-in homepage
 
-| Lobby | Office (day) | Office (night) |
-| --- | --- | --- |
+### Don't scroll my CV. Walk into my office.
+
+**[▶ Open the door — live demo](https://jong980812.github.io/office/)**
+
+[![Live demo](https://img.shields.io/badge/live-demo-1f4e8c?style=for-the-badge)](https://jong980812.github.io/office/)
+[![Built with Claude Code](https://img.shields.io/badge/built%20with-Claude%20Code%20%C2%B7%20Fable%205.1-d97757?style=for-the-badge)](https://claude.com/claude-code)
+[![No build step](https://img.shields.io/badge/build%20step-none-3fb56b?style=for-the-badge)](#run-it-locally)
+[![License: MIT](https://img.shields.io/badge/code-MIT-e8b931?style=for-the-badge)](LICENSE)
+
+| Knock, knock | Come in | Stay late |
+| :---: | :---: | :---: |
 | ![Lobby](docs/lobby.png) | ![Office by day](docs/office-day.png) | ![Office at night](docs/office-night.png) |
+| A lobby with who I am and what's new | Every object opens a section | After sunset in Seoul, the lamps come on |
 
-## What's inside
+</div>
 
-- **Lobby** — profile summary, a notice board with the latest news, a visitor counter and the door.
-- **Office** — the camera stands inside the room, so the room fills the screen. Numbered objects
-  open the sections:
+---
 
-  | # | Object | Section |
-  | --- | --- | --- |
-  | 1 | Bookshelf | About |
-  | 2 | Whiteboard | Research |
-  | 3 | Monitor | Publications |
-  | 4 | Wall of frames | Recognition |
-  | 5 | Calendar | News |
-  | 6 | Robot arm | Physical AI |
-  | 7 | Letter tray | Contact |
+Academic homepages all look the same: a photo, a bio, a list of papers. I wanted mine to feel like
+visiting someone, so I built a **walk-in homepage**. You arrive at my door, read the notice board,
+open the door, and look around my office. The monitor shows my papers, the whiteboard my research
+roadmap, the wall of frames my awards, the robot arm what I'm working on next.
 
-  The door on the left wall leads back to the lobby.
-- **Seoul time** — the badge in the top bar shows the current time in Seoul. By day the office is
-  bright; at night it switches to a dim, lamp-lit study mood (page theme included). Click the badge
-  to flip between the two, or preview a time with `?hour=22`.
-- **Deep links** — `#office` skips the lobby; `#publications`, `#research`, `#news`, … open a section.
+I'm sharing the whole thing so that **other researchers can build their own.** Take mine and
+swap in your content, or use it as a reference and build something completely different.
+Both routes are below, each with a prompt you can paste straight into Claude Code.
 
-## Run locally
+> I'm [Jongseo Lee](https://jong980812.github.io/), a researcher working on trustworthy multimodal
+> video understanding and Physical AI — and looking for PhD positions in the U.S. for Fall 2027.
 
-Static files only (three.js is loaded from a CDN), so any static server works:
+## What's in the room
+
+| # | Object | Opens | |
+| :---: | --- | --- | --- |
+| 1 | Bookshelf | About | Degrees are the book spines |
+| 2 | Whiteboard | Research | The roadmap is hand-drawn on a canvas |
+| 3 | Monitor | Publications | Plays the teaser video of my latest paper |
+| 4 | Wall of frames | Recognition | One frame per spotlight / highlight |
+| 5 | Calendar | News | Always shows today's date |
+| 6 | Robot arm | Physical AI | Follows your cursor and waves when clicked |
+| 7 | Letter tray | Contact | |
+| | Door | Back to the lobby | |
+
+A few details I'm fond of:
+
+- **It keeps my hours.** The badge in the top bar shows the time in Seoul. By day the office is
+  bright; after sunset it turns into a late-night study session — dim room, desk lamp, LED strip
+  behind the monitor — and the whole page follows into a dark theme. Click the badge to flip it.
+- **The door is real.** The lobby wall has a hole where the doorway is; the 3D office is already
+  running behind it, so when the door swings open you are looking at the actual room.
+- **It still works as a homepage.** Every section is plain HTML in a side panel, there are deep
+  links (`#publications`, `#news`, …), keyboard navigation, a phone layout, and a fallback if
+  WebGL isn't available.
+- **No build step.** Static files and three.js from a CDN. It runs on GitHub Pages as-is.
+
+## Make your own
+
+You need [Claude Code](https://claude.com/claude-code) (I used it with **Claude Fable 5.1**) and
+whatever you'd put on a homepage: your CV, a photo, links to your papers.
+
+```bash
+git clone https://github.com/jong980812/office.git my-office
+cd my-office
+claude
+```
+
+Then pick a route.
+
+### Route 1 — Keep this style, make it yours
+
+Same lobby, same room, your content. Paste this, with the brackets filled in:
+
+```text
+This repo is a walk-in 3D homepage. Keep its design, room layout and code structure, and
+replace Jongseo Lee's content with mine.
+
+About me: [name], [position] at [lab / institution], working on [research in one line].
+My CV is at [./cv.pdf], my current homepage is [URL], and my photo is at [./me.jpg].
+I live in [city, country].
+
+Please:
+1. Rewrite the lobby (profile plate, notice board) and every section panel in index.html from
+   my CV. Don't keep anything of Jongseo's that I have no replacement for.
+2. Update the 3D objects that carry text: the whiteboard roadmap, the award frames, the degree
+   books and the calendar note (js/textures.js, js/room.js).
+3. Replace the images and video in assets/ with mine, or with clean placeholders.
+4. Switch the clock and the day/night theme to my time zone (js/clock.js), and give the visitor
+   counter its own namespace (js/config.js).
+5. Change the accent colour to [colour], if I gave one.
+Then run it locally and show me screenshots of the lobby and the office, by day and by night.
+```
+
+### Route 2 — Start from scratch, with this as the reference
+
+Your own room, your own idea. A lab bench, a library carrel, a darkroom, a hanok study, the bridge
+of a spaceship — wherever your work actually feels like it lives.
+
+```text
+Use this repo only as a reference for how a walk-in homepage is put together: an entrance
+screen, a transition into a 3D room, objects that open sections, content kept as plain HTML,
+and a single config file that maps sections to objects and camera framing.
+
+Build me a new one from scratch in a fresh folder. Don't reuse Jongseo's room, objects, text
+or assets.
+
+My concept: [the place — e.g. "a wet lab at night", "a tiny observatory"].
+The mood: [e.g. "warm and cluttered", "clean and clinical"].
+Sections and the object for each: [About → ?, Research → ?, Publications → ?, …]
+About me: [name, position, institution, research in one line]. My CV is at [./cv.pdf].
+
+Keep what makes the reference work: static files only, deployable on GitHub Pages, readable
+without WebGL, usable on a phone. Start by proposing the room and the objects, and build once
+I've agreed.
+```
+
+Either way, keep talking to it. Most of this site came from messages like *"the monitor is too
+small"*, *"can I walk in through a door?"* and *"make it feel like studying at night"*.
+
+### Put it online
+
+Push to a GitHub repository, then **Settings → Pages → Deploy from a branch → `main` / root**.
+Your office is live at `https://<you>.github.io/<repo>/` a minute later.
+
+## Run it locally
+
+Any static file server works:
+
+```bash
+python3 -m http.server 8765      # then open http://127.0.0.1:8765
+```
+
+Handy URLs while editing: `?hour=22` previews night, `#office` skips the lobby,
+`#publications` opens a section directly.
+
+## How it's put together
 
 ```
-python3 -m http.server 8765
-```
-
-then open http://127.0.0.1:8765. It runs as-is on GitHub Pages.
-
-## Project layout
-
-```
-index.html        Page shell, lobby, and the content of every panel (<template id="tpl-…">)
-css/office.css    All styles; day/night colours are CSS variables at the top
+index.html        Page shell, the lobby, and the content of every panel (<template id="tpl-…">)
+css/office.css    All styles; day and night colours are CSS variables at the top
 js/
   main.js         Boot
   config.js       Sections, their 3D anchors and camera framing, room size, visitor counter
@@ -59,11 +156,44 @@ js/
 assets/           Profile photo, paper thumbnails, teaser video
 ```
 
-## Editing content
+Where to change things by hand:
 
-- **Text** of a section: edit its `<template>` in `index.html`. The lobby's "Latest news" list is
-  generated from the News template, so news only needs updating in one place.
-- **Add or move a section**: edit `HOTSPOTS` in `js/config.js` and build its object in `js/room.js`.
-- **Visitor counter**: uses [Abacus](https://abacus.jasoncameron.dev), a free public counter API.
-  Change the namespace in `js/config.js`, or set `VISITOR_COUNTER` to `null` to remove it.
-  Local previews never increase the count.
+- **Text of a section** — its `<template>` in `index.html`. The lobby's "Latest news" list is
+  generated from the News template, so news lives in one place.
+- **Add or move a section** — `HOTSPOTS` in `js/config.js`, then build its object in `js/room.js`.
+- **Colours** — the variables at the top of `css/office.css`; the night theme is the block
+  right below them.
+- **Visitor counter** — uses [Abacus](https://abacus.jasoncameron.dev), a free public counter.
+  Set your own namespace in `js/config.js`, or `VISITOR_COUNTER = null` to remove it.
+
+## Show me yours
+
+**I'd love to see what you build.** If you make a walk-in homepage — with this code or without
+it — open a pull request adding it to the list below, or just tag me.
+
+- [Jongseo Lee — Research Office](https://jong980812.github.io/office/)
+- *yours?*
+
+**Backseat driving is welcome, too.** Think the lighting is off, the room needs a couch, or the
+camera should do something smarter? [Open an issue](https://github.com/jong980812/office/issues)
+and tell me how you'd do it. I mean it.
+
+## Credits and license
+
+Designed and built in conversation with [Claude Code](https://claude.com/claude-code), using
+Claude Fable 5.1 — the room, the lobby, the night mode and this README included. 3D by
+[three.js](https://threejs.org/).
+
+The **code** is [MIT-licensed](LICENSE): use it, change it, ship it. The **content** is not part
+of that — my photo, bio, and the paper figures and video in `assets/` belong to me and my
+co-authors, so please replace them with your own.
+
+---
+
+<div align="center">
+
+**한국어 요약** · 연구자 프로필을 3D로 만들어 보고 싶은 분들께 참고가 되었으면 해서 전체 코드를 공개합니다.<br>
+그대로 가져다 내용만 바꿔도 좋고, 참고만 해서 완전히 새로 만들어도 좋습니다. 위의 프롬프트를 Claude Code에 붙여넣으면 됩니다.<br>
+여러분의 창의성을 보여주세요! 제 홈페이지에 대한 훈수는 언제든 환영입니다 ㅎㅎ
+
+</div>
