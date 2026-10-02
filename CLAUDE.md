@@ -1,4 +1,4 @@
-# Research Office — notes for Claude Code
+# Walk-in Homepage — notes for Claude Code
 
 A walk-in homepage: a lobby (plain HTML) with a door that opens into a 3D office (three.js) where
 each object opens a section. Static files only, no build step, deployed on GitHub Pages.

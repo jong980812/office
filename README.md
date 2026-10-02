@@ -1,8 +1,10 @@
 <div align="center">
 
-# 🚪 Research Office — a walk-in homepage
+# 🚪 Walk-in Homepage
 
-### Don't scroll my CV. Walk into my office.
+### A researcher homepage you walk into, not scroll through.
+
+Don't scroll my CV. Open the door and look around.
 
 **[▶ Open the door — live demo](https://jong980812.github.io/office/)**
 
