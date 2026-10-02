@@ -34,8 +34,10 @@ arrive at my door, read the notice board, open the door, and look around: the mo
 latest paper, the whiteboard holds my research roadmap, the frames on the wall are my awards, and
 the robot arm on the desk is what I'm working on next.
 
-No designer, no 3D artist, no build pipeline. I described what I wanted to Claude Code, sentence by
-sentence, and this is what came out.
+A confession: **I am not a front-end designer. I am not a web expert.** I study video models. I
+can't center a div without looking it up. They say science is done by standing on the shoulders of
+giants — I just climbed onto Claude's shoulders and pointed. I described what I wanted to Claude
+Code, sentence by sentence, and this is what came out.
 
 I'm sharing all of it so that **other researchers can make their own.** Take mine and swap in your
 content, build a completely different room with this as the reference, or add a room onto the
@@ -234,6 +236,11 @@ and tell me how you'd do it. I mean it.
 Designed and built in conversation with [Claude Code](https://claude.com/claude-code), using
 Claude Fable 5.1 — the room, the lobby, the night mode and this README included. 3D by
 [three.js](https://threejs.org/).
+
+**And thank you, sincerely, to every web developer who shared their work with the world.** The
+shoulders I climbed onto are really yours: the people who built three.js, wrote the docs and the
+tutorials, answered strangers' questions, and open-sourced what they knew. Someone who can't
+center a div got to build this because of you.
 
 The **code** is [MIT-licensed](LICENSE): use it, change it, ship it. The **content** is not part
 of that — my photo, bio, and the paper figures and video in `assets/` belong to me and my
